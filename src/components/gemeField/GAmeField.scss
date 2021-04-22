@@ -1,0 +1,16 @@
+.game_field {
+    .game_field__inner {
+        width: 750px;
+        padding: 50px 0;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(15, 50px);
+        .game_field__cell {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #000;
+            text-align: center;
+            color: rgb(77, 77, 77);
+        }
+    }
+}

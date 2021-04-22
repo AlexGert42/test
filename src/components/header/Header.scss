@@ -1,0 +1,26 @@
+.header {
+    width: 100%;
+    background-color: #000;
+    .header__inner {
+        padding: 20px 50px;
+        display: flex;
+        justify-content: space-between;
+        .header__tatle {
+            color: #fff;
+            font-size: 3rem;
+            
+        }
+        .header__btn {
+            cursor: pointer;
+            border: 1px solid #00e40b;
+            padding: 15px 30px;
+            margin-left: 30px;
+            box-shadow: 0 0 7px #00e40b;
+            font-size: 1.2rem;
+            background-color: #000;
+            text-transform: capitalize;
+            color: #fff;
+        }
+    }
+  
+}
