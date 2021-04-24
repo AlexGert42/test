@@ -19,7 +19,7 @@ export const GameField = () => {
                     {field.map(line => line.map(cell => {
                         return (
                             <div className="game_field__cell"
-                            style={cell.weight == 0 ? {color: 'black'} : {color: 'red', fontWeight: 'bold', fontSize: '2rem'}}
+                            style={cell.weight == 0 ? {color: 'black'} : {color: 'red', fontWeight: 'bold', fontSize: '1.5rem'}}
                             onClick={() => setField(gameAction(field,[cell.indexLine, cell.indexCell]))}
                             key={cell.index}
                             >{cell.weight} <br/>{cell.player}</div>

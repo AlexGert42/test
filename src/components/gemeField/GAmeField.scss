@@ -1,17 +1,17 @@
 .game_field {
     .game_field__inner {
-        width: 1500px;
+        width: 750px;
         padding: 50px 0;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(15, 100px);
+        grid-template-columns: repeat(15, 50px);
         .game_field__cell {
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
             border: 1px solid #000;
             text-align: center;
             color: rgb(77, 77, 77);
-            font-size: 1.5rem;
+            font-size: 1rem;
         }
     }
 }

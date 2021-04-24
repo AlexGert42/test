@@ -54,6 +54,7 @@ export const GameFieldProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, {
         flag: false,
         field: "",
+        count: 0,
     })
 
     const create = () => dispatch({ type: CREATE_GAME, payload: true })
