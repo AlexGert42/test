@@ -2,6 +2,33 @@
 
 
 
+
+
+
+const result = (arrWins) => {
+    for (let i = 0; i < arrWins.length; i++) {
+        if (
+            arrWins[i + 1] === 'X' &&
+            arrWins[i + 2] === 'X' &&
+            arrWins[i + 3] === 'X' &&
+            arrWins[i + 4] === 'X' &&
+            arrWins[i + 5] === 'X' &&
+            arrWins[i + 6] === 'X'
+            ) {
+                alert('X vins')
+                break
+            }
+    }
+}
+
+
+
+
+
+
+
+
+
 export const gameAction = (field, index) => {
     const newField = field
     newField[index[0]][index[1]].weight = null
@@ -9,62 +36,122 @@ export const gameAction = (field, index) => {
 
     
     let y = 0
-    let x = 0
+    let x = 1
     let z = 0
     let rz = 0
 
-    let count = 0
+    let m = []
 
 
-    for (let i = 0; i < newField.length; i++) {
-        
-        for (let k = 0; k < newField[i].length; k++) {
-            if (newField[i][k].player == 'X') {
-                console.log(newField[i][k]);
-               
+    let wins_x = []
+    let wins_y = []
+    let wins_z = []
+    let wins_rz = []
+
+
+    for (let i = 0; i < 7; i++) {
+        if (index[0] + i >= 0 && index[0] + i <= 14) {
+            if (newField[index[0] + i][index[1]].player === "X") {
+                wins_y.unshift('X')
+            } else {
+                wins_y.unshift(0)
             }
-            
         }
-        
+        if (index[0] - i >= 0 && index[0] - i <= 14) {
+            if ( newField[index[0] - i][index[1]].player === "X") {
+                wins_y.push('X')
+            } else {
+                wins_y.push(0)
+            }
+        }
     }
 
-
-
-
-    for (let i = 0; i < 5; i++) {
-        // debugger
-        if (index[0] + i >= 0 && index[0] + i <= 14 && index[0] - i >= 0 && index[0] - i <= 14) {
-            if (newField[index[0] + i][index[1]].player === "X" || newField[index[0] - i][index[1]].player === "X") {
-                y += 1
-                
-        } 
-    }
-    
-    for (let i = 1; i < 7; i++) {
-        if (index[1] + i >= 0 && index[1] + i <= 14 && index[1] - i >= 0 && index[1] - i <= 14) {
+    // console.log('Y-X', wins_y);
+    for (let i = 0; i < 7; i++) {
+        if (index[1] + i >= 0 && index[1] + i <= 14) {
             if (newField[index[0]][index[1] + i].player === "X") {
-                x++
-            } 
+                wins_x.unshift('X')
+            } else {
+                wins_x.unshift(0)
+            }
+        }
+        if (index[1] - i >= 0 && index[1] - i <= 14) {
             if (newField[index[0]][index[1] - i].player === "X") {
-                x++
-            } 
+                wins_x.push('X')
+            } else {
+                wins_x.push(0)
+            }
         }
     }
 
-    for (let i = 0; i < 5; i++) {
-        if (index[0] + i <= 14 && index[1] + i <= 14 && index[0] - i >= 0 && index[1] - i >= 0) {
-            if (newField[index[0] + i][index[1] + i].player === "X" || newField[index[0] - i][index[1] - i].player === "X") {
-                z++
+
+    // console.log('X', vic_x);
+
+    for (let i = 0; i < 7; i++) {
+        if (index[0] + i <= 14 && index[1] + i <= 14) {
+            if (newField[index[0] + i][index[1] + i].player === "X") {
+                wins_z.unshift('X')
+            } else {
+                wins_z.unshift(0)
             }
         } 
+        if (index[0] - i >= 0 && index[1] - i >= 0) {
+            if (newField[index[0] - i][index[1] - i].player === "X") {
+                wins_z.push('X')
+            } else {
+                wins_z.push(0)
+            }
+        }
     }
-    for (let i = 0; i < 5; i++) {
-        if (index[0] + i <= 14 && index[1] - i >= 0 && index[0] - i >= 0 &&  index[1] + i <= 14) {
-            if (newField[index[0] + i][index[1] - i].player === "X" || newField[index[0] - i][index[1] + i].player === "X") {
-                rz++
+
+    // console.log('Z-X', vic_z);
+
+
+
+
+
+
+
+
+    for (let i = 0; i < 7; i++) {
+        if (index[0] + i <= 14 && index[1] - i >= 0) {
+            if (newField[index[0] + i][index[1] - i].player === "X") {
+                wins_rz.unshift('X')
+            } else {
+                wins_rz.unshift(0)
             }
         } 
+        if (index[0] - i >= 0 &&  index[1] + i <= 14) {
+            if ( newField[index[0] - i][index[1] + i].player === "X") {
+                wins_rz.push('X')
+            } else {
+                wins_rz.push(0)
+            }
+        }
     }
+    // console.log('rZ-X', vic_rz);
+
+    result(wins_y)
+    result(wins_x)
+    result(wins_z)
+    result(wins_rz)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     for (let i = 0; i < 5; i++) {
@@ -174,4 +261,4 @@ export const gameAction = (field, index) => {
 
     return newField
 }
-}
+
