@@ -3,6 +3,8 @@ import React, { useContext, useReducer, useEffect } from "react"
 const CREATE_GAME = "CREATE_GAME"
 const REMOVE_GAME = "REMOVE_GAME"
 const ACTION_GAME = "ACTION_GAME"
+const PLAYER = "PLAYER"
+
 
 const GameFieldContext = React.createContext()
 export const useGameField = () => useContext(GameFieldContext)
@@ -28,6 +30,8 @@ const reducer = (state, action) => {
                     ...state,
                     flag: action.payload,
                     field: field,
+                    single: true,
+                    count: 0,
                 }
             } else {
                 return {
@@ -37,9 +41,16 @@ const reducer = (state, action) => {
                 }
             }
         case REMOVE_GAME:
-            return { ...state, flag: action.payload }
+            return { 
+                ...state,
+                 flag: action.payload,
+                 single: false,
+                 count: 0,
+                 }
         case ACTION_GAME:
-            return { ...state, field: action.payload }
+            return { ...state, field: action.payload, count: state.count++ }
+        case PLAYER:
+            return {...state, single: action.payload}
         default:
             return state
     }
@@ -55,11 +66,17 @@ export const GameFieldProvider = ({ children }) => {
         flag: false,
         field: "",
         count: 0,
+        single: false,
+
+        player_1: "X",
+        player_2: "O",
     })
 
     const create = () => dispatch({ type: CREATE_GAME, payload: true })
     const remove = () => dispatch({ type: REMOVE_GAME, payload: false })
     const setField = (newField) => dispatch({ type: ACTION_GAME, payload: newField })
+    const onePlayer = (value) => dispatch({ type: PLAYER, payload: value})
+    
 
     window.state = state
 
@@ -68,9 +85,15 @@ export const GameFieldProvider = ({ children }) => {
             value={{
                 flag: state.flag,
                 field: state.field,
+                single: state.single,
+                count: state.count,
+                player_1: state.player_1,
+                player_2: state.player_2,
+ 
                 create,
                 remove,
                 setField,
+                onePlayer,
             }}
         >
             {children}
