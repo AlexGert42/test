@@ -1,3 +1,29 @@
+
+const ai = (field, index, player) => {
+    const newField = field
+
+    let y = 0
+    let x = 0
+    let z = 0
+    let rz = 0
+
+
+    
+
+    
+
+    return newField
+}
+
+
+
+
+
+
+
+
+
+
 const winsMove = (arrWins, player) => {
     for (let i = 0; i < arrWins.length; i++) {
         if (
@@ -16,7 +42,26 @@ const winsMove = (arrWins, player) => {
 
 
 
-export const gameAction = (field, index, player) => {
+export const gameAction = (field, index, player, single) => {
+    
+    if (!single && player === 'O') {
+        return ai(field, index, player)
+    } else {
+        return movePlayer(field, index, player)
+       
+        
+
+    }
+}
+
+
+
+
+
+
+
+
+const movePlayer = (field, index, player) => {
     const newField = field
     newField[index[0]][index[1]].weight = null
     newField[index[0]][index[1]].player = player
@@ -25,7 +70,8 @@ export const gameAction = (field, index, player) => {
     let x = 0
     let z = 0
     let rz = 0
-
+    
+        
     let wins_x = []
     let wins_y = []
     let wins_z = []
@@ -35,6 +81,7 @@ export const gameAction = (field, index, player) => {
         if (index[0] + i >= 0 && index[0] + i <= 14) {
             if (newField[index[0] + i][index[1]].player === player) {
                 wins_y.unshift(player)
+                y++
             } else {
                 wins_y.unshift(0)
             }
@@ -42,6 +89,7 @@ export const gameAction = (field, index, player) => {
         if (index[0] - i >= 0 && index[0] - i <= 14) {
             if (newField[index[0] - i][index[1]].player === player) {
                 wins_y.push(player)
+                y++
             } else {
                 wins_y.push(0)
             }
@@ -53,6 +101,7 @@ export const gameAction = (field, index, player) => {
         if (index[1] + i >= 0 && index[1] + i <= 14) {
             if (newField[index[0]][index[1] + i].player === player) {
                 wins_x.unshift(player)
+                x++
             } else {
                 wins_x.unshift(0)
             }
@@ -60,6 +109,7 @@ export const gameAction = (field, index, player) => {
         if (index[1] - i >= 0 && index[1] - i <= 14) {
             if (newField[index[0]][index[1] - i].player === player) {
                 wins_x.push(player)
+                x++
             } else {
                 wins_x.push(0)
             }
@@ -72,6 +122,7 @@ export const gameAction = (field, index, player) => {
         if (index[0] + i <= 14 && index[1] + i <= 14) {
             if (newField[index[0] + i][index[1] + i].player === player) {
                 wins_z.unshift(player)
+                z++
             } else {
                 wins_z.unshift(0)
             }
@@ -79,6 +130,7 @@ export const gameAction = (field, index, player) => {
         if (index[0] - i >= 0 && index[1] - i >= 0) {
             if (newField[index[0] - i][index[1] - i].player === player) {
                 wins_z.push(player)
+                z++
             } else {
                 wins_z.push(0)
             }
@@ -91,6 +143,7 @@ export const gameAction = (field, index, player) => {
         if (index[0] + i <= 14 && index[1] - i >= 0) {
             if (newField[index[0] + i][index[1] - i].player === player) {
                 wins_rz.unshift(player)
+                rz++
             } else {
                 wins_rz.unshift(0)
             }
@@ -98,6 +151,7 @@ export const gameAction = (field, index, player) => {
         if (index[0] - i >= 0 && index[1] + i <= 14) {
             if (newField[index[0] - i][index[1] + i].player === player) {
                 wins_rz.push(player)
+                rz++
             } else {
                 wins_rz.push(0)
             }
@@ -110,93 +164,104 @@ export const gameAction = (field, index, player) => {
     winsMove(wins_z, player)
     winsMove(wins_rz, player)
 
-    // for (let i = 0; i < 5; i++) {
-        // =====================================Y
+    let newField2 = weighing(newField, index, )
 
-        // if (index[0] + i >= 0 && index[0] + i <= 14) {
-            // if (newField[index[0] + i][index[1]].player === "X") {
-                // newField[index[0] + i][index[1]].weight = null
-            // } else {
-                // newField[index[0] + i][index[1]].weight += Number(
-                    // Math.round(10 * y)
-                // )
-            // }
-        // }
 
-        // if (index[0] - i >= 0 && index[0] - i <= 14) {
-            // if (newField[index[0] - i][index[1]].player === "X") {
-                // newField[index[0] - i][index[1]].weight = null
-            // } else {
-                // newField[index[0] - i][index[1]].weight += Number(
-                    // Math.round(10 * y)
-                // )
-            // }
-        // }
+    return newField2
 
-        // ================================================== X
+}
 
-        // if (index[1] + i >= 0 && index[1] + i <= 14) {
-            // if (newField[index[0]][index[1] + i].player === "X") {
-                // newField[index[0]][index[1] + i].weight = null
-            // } else {
-                // newField[index[0]][index[1] + i].weight += Number(
-                    // Math.round(10 * x)
-                // )
-            // }
-        // }
-        // if (index[1] - i >= 0 && index[1] - i <= 14) {
-            // if (newField[index[0]][index[1] - i].player === "X") {
-                // newField[index[0]][index[1] - i].weight = null
-            // } else {
-                // newField[index[0]][index[1] - i].weight += Number(
-                    // Math.round(10 * x)
-                // )
-            // }
-        // }
-        // console.log('X', x);
 
-        // ====================================================Z
 
-        // if (index[0] + i <= 14 && index[1] + i <= 14) {
-            // if (newField[index[0] + i][index[1] + i].player === "X") {
-                // newField[index[0] + i][index[1] + i].weight = null
-            // } else {
-                // newField[index[0] + i][index[1] + i].weight += Number(
-                    // Math.round(10 * z)
-                // )
-            // }
-        // }
-        // if (index[0] - i >= 0 && index[1] - i >= 0) {
-            // if (newField[index[0] - i][index[1] - i].player === "X") {
-                // newField[index[0] - i][index[1] - i].weight = null
-            // } else {
-                // newField[index[0] - i][index[1] - i].weight += Number(
-                    // Math.round(10 * z)
-                // )
-            // }
-        // }
 
-        // =============================================================RZ
 
-        // if (index[0] + i <= 14 && index[1] - i >= 0) {
-            // if (newField[index[0] + i][index[1] - i].player === "X") {
-                // newField[index[0] + i][index[1] - i].weight = null
-            // } else {
-                // newField[index[0] + i][index[1] - i].weight += Number(
-                    // Math.round(10 * rz)
-                // )
-            // }
-        // }
-        // if (index[0] - i >= 0 && index[1] + i <= 14) {
-            // if (newField[index[0] - i][index[1] + i].player === "X") {
-                // newField[index[0] - i][index[1] + i].weight = null
-            // } else {
-                // newField[index[0] - i][index[1] + i].weight += Number(
-                    // Math.round(10 * rz)
-                // )
-            // }
-        // }
-    // }
+const weighing = (newField, index, ) => {
+    for (let i = 1; i < 6; i++) {
+        //=====================================Y
 
+        if (index[0] + i >= 0 && index[0] + i <= 14) {
+            if (newField[index[0] + i][index[1]].player === "X") {
+                newField[index[0] + i][index[1]].weight = null
+            } else {
+                newField[index[0] + i][index[1]].weight += Number(
+                    Math.round(10 / i)
+                )
+            }
+        }
+
+        if (index[0] - i >= 0 && index[0] - i <= 14) {
+            if (newField[index[0] - i][index[1]].player === "X") {
+                newField[index[0] - i][index[1]].weight = null
+            } else {
+                newField[index[0] - i][index[1]].weight += Number(
+                    Math.round(10 / i)
+                )
+            }
+        }
+
+        //================================================== X
+
+        if (index[1] + i >= 0 && index[1] + i <= 14) {
+            if (newField[index[0]][index[1] + i].player === "X") {
+                newField[index[0]][index[1] + i].weight = null
+            } else {
+                newField[index[0]][index[1] + i].weight += Number(
+                    Math.round(10 / i)
+                )
+            }
+        }
+        if (index[1] - i >= 0 && index[1] - i <= 14) {
+            if (newField[index[0]][index[1] - i].player === "X") {
+                newField[index[0]][index[1] - i].weight = null
+            } else {
+                newField[index[0]][index[1] - i].weight += Number(
+                    Math.round(10 / i)
+                )
+            }
+        }
+        
+
+        //====================================================Z
+
+        if (index[0] + i <= 14 && index[1] + i <= 14) {
+            if (newField[index[0] + i][index[1] + i].player === "X") {
+                newField[index[0] + i][index[1] + i].weight = null
+            } else {
+                newField[index[0] + i][index[1] + i].weight += Number(
+                    Math.round(10 / i)
+                )
+            }
+        }
+        if (index[0] - i >= 0 && index[1] - i >= 0) {
+            if (newField[index[0] - i][index[1] - i].player === "X") {
+                newField[index[0] - i][index[1] - i].weight = null
+            } else {
+                newField[index[0] - i][index[1] - i].weight += Number(
+                    Math.round(10 / i)
+                )
+            }
+        }
+
+        //=============================================================RZ
+
+        if (index[0] + i <= 14 && index[1] - i >= 0) {
+            if (newField[index[0] + i][index[1] - i].player === "X") {
+                newField[index[0] + i][index[1] - i].weight = null
+            } else {
+                newField[index[0] + i][index[1] - i].weight += Number(
+                    Math.round(10 / i)
+                )
+            }
+        }
+        if (index[0] - i >= 0 && index[1] + i <= 14) {
+            if (newField[index[0] - i][index[1] + i].player === "X") {
+                newField[index[0] - i][index[1] + i].weight = null
+            } else {
+                newField[index[0] - i][index[1] + i].weight += Number(
+                    Math.round(10 / i)
+                )
+            }
+        }
+    }
     return newField
 }
