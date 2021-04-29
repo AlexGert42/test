@@ -30,7 +30,6 @@ const reducer = (state, action) => {
                     ...state,
                     flag: action.payload,
                     field: field,
-                    single: true,
                     count: 0,
                 }
             } else {

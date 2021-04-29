@@ -1,19 +1,27 @@
 import {useGameField} from '../../context/GameFieldContext'
-import {gameAction} from './game'
-
+import {playersGameAction} from './game'
+import {singleGameAction} from './gameBot'
 
 export const GameField = () => {
     const {flag, field, setField, count, player_1, player_2, single } = useGameField()
     let player = '' 
+    let gameAction = ''
     if (!flag) {
         return null
     }
+
+        
+    
+    if (single) {
+        gameAction = singleGameAction
+    } else {
         if (count % 2 === 0) {
             player = player_1
         } else {
             player = player_2
         }
-    
+        gameAction = playersGameAction
+    }
 
 
 
@@ -31,8 +39,15 @@ export const GameField = () => {
                                 if (cell.weight === null) {
                                     return null
                                 } else {
-                                    setField(gameAction(field, [cell.indexLine, cell.indexCell], player, single))
+                                    if (single) {
+                                        player = 'X'
+                                        setField(gameAction(field, [cell.indexLine, cell.indexCell], player))
+                                    } else {
+                                        
+                                        setField(gameAction(field, [cell.indexLine, cell.indexCell], player))
+                                    }
                                 }
+                               
                             }}
                             key={cell.index}
                             >{cell.player} <br/>{cell.weight}</div>
@@ -43,3 +58,5 @@ export const GameField = () => {
         </main>
     )
 }
+
+{/* <br/>{cell.weight} */}

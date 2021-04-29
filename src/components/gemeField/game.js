@@ -1,19 +1,4 @@
 
-const ai = (field, index, player) => {
-    const newField = field
-
-    let y = 0
-    let x = 0
-    let z = 0
-    let rz = 0
-
-
-    
-
-    
-
-    return newField
-}
 
 
 
@@ -42,16 +27,14 @@ const winsMove = (arrWins, player) => {
 
 
 
-export const gameAction = (field, index, player, single) => {
-    
-    if (!single && player === 'O') {
-        return ai(field, index, player)
-    } else {
-        return movePlayer(field, index, player)
-       
-        
+export const playersGameAction = (field, index, player) => {
+    const newField = field
+    newField[index[0]][index[1]].weight = null
+    newField[index[0]][index[1]].player = player
+   
+    movePlayer(field, index, player)
 
-    }
+    return newField
 }
 
 
@@ -61,10 +44,8 @@ export const gameAction = (field, index, player, single) => {
 
 
 
-const movePlayer = (field, index, player) => {
-    const newField = field
-    newField[index[0]][index[1]].weight = null
-    newField[index[0]][index[1]].player = player
+const movePlayer = (newField, index, player) => {
+    
 
     let y = 0
     let x = 0
@@ -164,10 +145,8 @@ const movePlayer = (field, index, player) => {
     winsMove(wins_z, player)
     winsMove(wins_rz, player)
 
-    let newField2 = weighing(newField, index, )
 
-
-    return newField2
+    // return newField
 
 }
 
