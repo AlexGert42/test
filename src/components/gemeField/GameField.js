@@ -34,14 +34,13 @@ export const GameField = () => {
                     {field.map(line => line.map(cell => {
                         return (
                             <div className="game_field__cell"
-                            style={cell.weight == 0 ? {color: 'black'} : {color: 'red', fontWeight: 'bold', fontSize: '1.5rem'}}
+                            style={cell.weightPlayer == 0 || cell.weightBot == 0 ? {color: 'black'} : {color: 'red', fontWeight: 'bold', fontSize: '2.2rem'}}
                             onClick={() => {
-                                if (cell.weight === null) {
+                                if (cell.player === player_1 || cell.player === player_2) {
                                     return null
                                 } else {
                                     if (single) {
-                                        player = 'X'
-                                        setField(gameAction(field, [cell.indexLine, cell.indexCell], player))
+                                        setField(gameAction(field, [cell.indexLine, cell.indexCell], player_1, player_2))
                                     } else {
                                         
                                         setField(gameAction(field, [cell.indexLine, cell.indexCell], player))
@@ -50,7 +49,7 @@ export const GameField = () => {
                                
                             }}
                             key={cell.index}
-                            >{cell.player} <br/>{cell.weight}</div>
+                            >{cell.player}  </div>
                         )
                     }))}
                 </div>
@@ -59,4 +58,4 @@ export const GameField = () => {
     )
 }
 
-{/* <br/>{cell.weight} */}
+{/* <br/>x:{cell.weightPlayer} <br/>o:{cell.weightBot} */}

@@ -21,6 +21,8 @@ const reducer = (state, action) => {
                             indexCell,
                             index: indexLine * 15 + indexCell,
                             weight: 0,
+                            weightPlayer: 0,
+                            weightBot: 0,
                             player: "",
                         }
                     })
