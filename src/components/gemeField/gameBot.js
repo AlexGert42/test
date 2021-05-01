@@ -6,10 +6,10 @@ export const singleGameAction = (field, index, player, botPlayer) => {
     newField[index[0]][index[1]].weightBot = null
     newField[index[0]][index[1]].player = player
     // console.log(newField);
-   
+    vins(field, index)
 
     
-    let kefPlayer = movePlayer(newField, index, player)
+    let kefPlayer = movePlayer(newField, index, player, botPlayer)
     
     let weightPlayer = weightAnalysis(newField, index, player, kefPlayer)
     
@@ -19,7 +19,7 @@ export const singleGameAction = (field, index, player, botPlayer) => {
     newField[moveBot.indexLine][moveBot.indexCell].player = botPlayer
     newField[moveBot.indexLine][moveBot.indexCell].weightBot = null
     newField[moveBot.indexLine][moveBot.indexCell].weightPlayer = null
-    let kefBot = movePlayer(newField, [moveBot.indexLine, moveBot.indexCell], botPlayer)
+    let kefBot = movePlayer(newField, [moveBot.indexLine, moveBot.indexCell], botPlayer, player)
 
 
     let weightBot = weightAnalysisBot(newField, [moveBot.indexLine, moveBot.indexCell], botPlayer, kefBot)
@@ -58,8 +58,57 @@ const bot = ( weightPlayer, player, botPlayer) => {
          }
     }
     
+    let comb = []
+    
 
-    // console.log(index);
+    weightPlayer.map((line, il) => line.map((cell, ic) => {
+        if (cell.player === player) {
+            // let newArry = new Array(15).fill(new Array(15).fill(0))
+            let array = []
+            for (let i = 0; i < 7; i++) {
+                if (cell.indexLine + i <= 14 && cell.indexLine - i >= 0) {
+                    if (weightPlayer[il + i][ic].player === 'O' || weightPlayer[il - i][ic].player === 'O') {
+                        array[cell.indexLine + i] = 'O'
+                    } else {
+                        array[cell.indexLine + i] = 'X'
+                    }
+                    
+                }
+                // if (cell.indexLine - i >= 0) {
+                //     if (weightPlayer[il - i][ic].player === 'O') {
+                //         array[cell.indexLine - i] = -1
+                //     } else {
+                //         array[cell.indexLine - i] = 2
+                //     }
+                    
+                // }
+                comb = array
+            }
+            
+        }
+        
+    }))
+
+    console.log('comb:', comb);
+    // console.log(weightPlayer);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return index
 }
 
@@ -81,8 +130,8 @@ const weightAnalysisBot = (field, index, player, kef) => {
                 newField[index[0] + i][index[1]].weightBot = null
                 y++
             } else {
-                newField[index[0] + i][index[1]].weightBot = Number(
-                    Math.round(1.5 / i * kef.y )
+                newField[index[0] + i][index[1]].weightBot += Number(
+                    Math.round(1.5  * kef.y )
                 )
             }
         }
@@ -92,8 +141,8 @@ const weightAnalysisBot = (field, index, player, kef) => {
                 newField[index[0] - i][index[1]].weightBot = null
                 y++
             } else {
-                newField[index[0] - i][index[1]].weightBot = Number(
-                    Math.round(1.5 / i * kef.y )
+                newField[index[0] - i][index[1]].weightBot += Number(
+                    Math.round(1.5  * kef.y )
                 )
             }
         }
@@ -105,8 +154,8 @@ const weightAnalysisBot = (field, index, player, kef) => {
                 newField[index[0]][index[1] + i].weightBot = null
                 x++
             } else {
-                newField[index[0]][index[1] + i].weightBot = Number(
-                    Math.round(1.5 / i * kef.x )
+                newField[index[0]][index[1] + i].weightBot += Number(
+                    Math.round(1.5  * kef.x )
                 )
             }
         }
@@ -115,8 +164,8 @@ const weightAnalysisBot = (field, index, player, kef) => {
                 newField[index[0]][index[1] - i].weightBot = null
                 x++
             } else {
-                newField[index[0]][index[1] - i].weightBot = Number(
-                    Math.round(1.5 / i * kef.x )
+                newField[index[0]][index[1] - i].weightBot += Number(
+                    Math.round(1.5  * kef.x )
                 )
             }
         }
@@ -129,8 +178,8 @@ const weightAnalysisBot = (field, index, player, kef) => {
                 newField[index[0] + i][index[1] + i].weightBot = null
                 z++
             } else {
-                newField[index[0] + i][index[1] + i].weightBot = Number(
-                    Math.round(1.5 / i * kef.z )
+                newField[index[0] + i][index[1] + i].weightBot += Number(
+                    Math.round(1.5  * kef.z )
                 )
             }
         }
@@ -139,8 +188,8 @@ const weightAnalysisBot = (field, index, player, kef) => {
                 newField[index[0] - i][index[1] - i].weightBot = null
                 z++
             } else {
-                newField[index[0] - i][index[1] - i].weightBot = Number(
-                    Math.round(1.5 / i * kef.z )
+                newField[index[0] - i][index[1] - i].weightBot += Number(
+                    Math.round(1.5  * kef.z )
                 )
             }
         }
@@ -152,8 +201,8 @@ const weightAnalysisBot = (field, index, player, kef) => {
                 newField[index[0] + i][index[1] - i].weightBot = null
                 rz++
             } else {
-                newField[index[0] + i][index[1] - i].weightBot = Number(
-                    Math.round(1.5 / i * kef.rz )
+                newField[index[0] + i][index[1] - i].weightBot += Number(
+                    Math.round(1.5  * kef.rz )
                 )
             }
         }
@@ -162,8 +211,8 @@ const weightAnalysisBot = (field, index, player, kef) => {
                 newField[index[0] - i][index[1] + i].weightBot = null
                 rz++
             } else {
-                newField[index[0] - i][index[1] + i].weightBot = Number(
-                    Math.round(1.5 / i * kef.rz )
+                newField[index[0] - i][index[1] + i].weightBot += Number(
+                    Math.round(1.5  * kef.rz )
                 )
             }
         }
@@ -172,6 +221,34 @@ const weightAnalysisBot = (field, index, player, kef) => {
     return newField
 }
 
+
+
+const vins = (field, index) => {
+    let newArry = new Array(15).fill(new Array(15).fill(0))
+    let n = 0
+    field.map((line, il) => line.map((cell, ic) => {
+        if (cell.player === 'X') {
+            newArry[il][ic] = cell.player
+            if (il + 1 <= 14) {
+                newArry[il + 1][ic] = cell.player
+               
+            }
+            if (il + 2 <= 14) {
+                newArry[il + 2][ic] = cell.player
+            }
+            if (il + 3 <= 14) {
+                newArry[il + 3][ic] = cell.player
+            }
+            if (il + 4 <= 14) {
+                newArry[il + 4][ic] = cell.player
+            }
+
+           
+
+        }
+    }))
+    // console.log(newArry);
+}
 
 
 
@@ -193,8 +270,8 @@ const weightAnalysis = (field, index, player, kef) => {
                 newField[index[0] + i][index[1]].weightPlayer = null
                 y++
             } else {
-                newField[index[0] + i][index[1]].weightPlayer = Number(
-                    Math.round(1 / i * kef.y )
+                newField[index[0] + i][index[1]].weightPlayer += Number(
+                    Math.round(1  * kef.y )
                 )
             }
         }
@@ -204,8 +281,8 @@ const weightAnalysis = (field, index, player, kef) => {
                 newField[index[0] - i][index[1]].weightPlayer = null
                y++
             } else {
-                newField[index[0] - i][index[1]].weightPlayer = Number(
-                    Math.round(1 / i * kef.y)
+                newField[index[0] - i][index[1]].weightPlayer += Number(
+                    Math.round(1  * kef.y)
                 )
             }
         }
@@ -217,8 +294,8 @@ const weightAnalysis = (field, index, player, kef) => {
                 newField[index[0]][index[1] + i].weightPlayer = null
                x++
             } else {
-                newField[index[0]][index[1] + i].weightPlayer = Number(
-                    Math.round(1 / i * kef.x )
+                newField[index[0]][index[1] + i].weightPlayer += Number(
+                    Math.round(1  * kef.x )
                 )
             }
         }
@@ -227,8 +304,8 @@ const weightAnalysis = (field, index, player, kef) => {
                 newField[index[0]][index[1] - i].weightPlayer = null
                x++
             } else {
-                newField[index[0]][index[1] - i].weightPlayer = Number(
-                    Math.round(1 / i * kef.x )
+                newField[index[0]][index[1] - i].weightPlayer += Number(
+                    Math.round(1  * kef.x )
                 )
             }
         }
@@ -241,8 +318,8 @@ const weightAnalysis = (field, index, player, kef) => {
                 newField[index[0] + i][index[1] + i].weightPlayer = null
                 z++
             } else {
-                newField[index[0] + i][index[1] + i].weightPlayer = Number(
-                    Math.round(1/ i * kef.z )
+                newField[index[0] + i][index[1] + i].weightPlayer += Number(
+                    Math.round(1 * kef.z )
                 )
             }
         }
@@ -251,8 +328,8 @@ const weightAnalysis = (field, index, player, kef) => {
                 newField[index[0] - i][index[1] - i].weightPlayer = null
                
             } else {
-                newField[index[0] - i][index[1] - i].weightPlayer = Number(
-                    Math.round(1 / i * kef.z )
+                newField[index[0] - i][index[1] - i].weightPlayer += Number(
+                    Math.round(1  * kef.z )
                 )
             }
         }
@@ -264,8 +341,8 @@ const weightAnalysis = (field, index, player, kef) => {
                 newField[index[0] + i][index[1] - i].weightPlayer = null
                
             } else {
-                newField[index[0] + i][index[1] - i].weightPlayer = Number(
-                    Math.round(1 / i * kef.rz )
+                newField[index[0] + i][index[1] - i].weightPlayer += Number(
+                    Math.round(1 * kef.rz )
                 )
             }
         }
@@ -274,8 +351,8 @@ const weightAnalysis = (field, index, player, kef) => {
                 newField[index[0] - i][index[1] + i].weightPlayer = null
                
             } else {
-                newField[index[0] - i][index[1] + i].weightPlayer = Number(
-                    Math.round(1 / i * kef.rz )
+                newField[index[0] - i][index[1] + i].weightPlayer += Number(
+                    Math.round(1  * kef.rz )
                 )
             }
         }
@@ -286,7 +363,7 @@ const weightAnalysis = (field, index, player, kef) => {
 
 
 
-const movePlayer = (newField, index, player) => {
+const movePlayer = (newField, index, player, playerTwo) => {
     
 
     let y = 0
@@ -306,7 +383,7 @@ const movePlayer = (newField, index, player) => {
                 wins_y.unshift(player)
                 
             } else {
-                wins_y.unshift(0)
+                wins_y.unshift(newField[index[0] + i][index[1]].player)
             }
         }
         if (index[0] - i >= 0 && index[0] - i <= 14) {
@@ -314,7 +391,7 @@ const movePlayer = (newField, index, player) => {
                 wins_y.push(player)
                 
             } else {
-                wins_y.push(0)
+                wins_y.push(newField[index[0] - i][index[1]].player)
             }
         }
     }
@@ -326,7 +403,7 @@ const movePlayer = (newField, index, player) => {
                 wins_x.unshift(player)
                
             } else {
-                wins_x.unshift(0)
+                wins_x.unshift(newField[index[0]][index[1] + i].player)
             }
         }
         if (index[1] - i >= 0 && index[1] - i <= 14) {
@@ -334,7 +411,7 @@ const movePlayer = (newField, index, player) => {
                 wins_x.push(player)
                
             } else {
-                wins_x.push(0)
+                wins_x.push(newField[index[0]][index[1] - i].player)
             }
         }
     }
@@ -347,7 +424,7 @@ const movePlayer = (newField, index, player) => {
                 wins_z.unshift(player)
                 
             } else {
-                wins_z.unshift(0)
+                wins_z.unshift(newField[index[0] + i][index[1] + i].player)
             }
         }
         if (index[0] - i >= 0 && index[1] - i >= 0) {
@@ -355,7 +432,7 @@ const movePlayer = (newField, index, player) => {
                 wins_z.push(player)
               
             } else {
-                wins_z.push(0)
+                wins_z.push(newField[index[0] - i][index[1] - i].player)
             }
         }
     }
@@ -368,7 +445,7 @@ const movePlayer = (newField, index, player) => {
                 wins_rz.unshift(player)
                
             } else {
-                wins_rz.unshift(0)
+                wins_rz.unshift(newField[index[0] + i][index[1] - i].player)
             }
         }
         if (index[0] - i >= 0 && index[1] + i <= 14) {
@@ -376,26 +453,26 @@ const movePlayer = (newField, index, player) => {
                 wins_rz.push(player)
                
             } else {
-                wins_rz.push(0)
+                wins_rz.push(newField[index[0] - i][index[1] + i].player)
             }
         }
     }
     // console.log('rZ-X', vic_rz);
 
-   y = winsMove(wins_y, player)
-   x = winsMove(wins_x, player)
-   z = winsMove(wins_z, player)
-   rz = winsMove(wins_rz, player)
+   y = winsMove(wins_y, player, playerTwo)
+   x = winsMove(wins_x, player, playerTwo)
+   z = winsMove(wins_z, player, playerTwo)
+   rz = winsMove(wins_rz, player, playerTwo)
 
    
 
-    return {
-        y,
-        x,
-        z,
-        rz
-    }
-
+    // return {
+    //     y,
+    //     x,
+    //     z,
+    //     rz
+    // }
+    return newField
 }
 
 
@@ -409,57 +486,64 @@ const movePlayer = (newField, index, player) => {
 
 
 
-const winsMove  = (arrWins, player) => {
-    let kef = 0
-    for (let i = 0; i < arrWins.length; i++) {
-        if (arrWins[i + 0] === player) {
-            console.log('1:',arrWins );
-            kef++
-        }
-        if (arrWins[i + 0] === player &&
-            arrWins[i + 1] === player ) {
-                console.log('2:',arrWins );
-                kef++
-        }
-        if (arrWins[i + 0] === player &&
-            arrWins[i + 1] === player &&
-            arrWins[i + 2] === player 
-            ) {
-                console.log('3:',arrWins );
-                kef++
-            }
-        if (arrWins[i + 0] === player &&
-            arrWins[i + 1] === player &&
-            arrWins[i + 2] === player &&
-            arrWins[i + 3] === player 
-            ) {
-                console.log('4:',arrWins );
-                kef++
-            }
-        if (arrWins[i + 0] === player &&
-            arrWins[i + 1] === player &&
-            arrWins[i + 2] === player &&
-            arrWins[i + 3] === player &&
-            arrWins[i + 4] === player ) {
-                console.log('5:',arrWins );
-                kef++
-            }
-        if (
-            arrWins[i + 0] === player &&
-            arrWins[i + 1] === player &&
-            arrWins[i + 2] === player &&
-            arrWins[i + 3] === player &&
-            arrWins[i + 4] === player &&
-            arrWins[i + 5] === player
-        ) {
-            kef++
-            alert(`${player} vins`)
-            break
-        }
-    }
+const winsMove  = (arrWins, player, playerTwo) => {
+    let kef = 1
     if (arrWins.length < 6) {
-        kef = 0
+        return kef = 1
+    } else {
+        for (let i = 0; i < arrWins.length; i++) {
+            if (arrWins[i + 0] === player) {
+                // console.log('1:',arrWins );
+                kef = 1
+            }
+            if (arrWins[i + 0] === player &&
+                arrWins[i + 1] === player ) {
+                    // console.log('2:',arrWins );
+                    kef = 1
+            }
+            if (arrWins[i + 0] === player &&
+                arrWins[i + 1] === player &&
+                arrWins[i + 2] === player 
+                ) {
+                    // console.log('3:',arrWins );
+                    kef++
+                }
+            if (arrWins[i + 0] === player &&
+                arrWins[i + 1] === player &&
+                arrWins[i + 2] === player &&
+                arrWins[i + 3] === player 
+                ) {
+                    // console.log('4:',arrWins );
+                    kef++
+                }
+            if (arrWins[i + 0] === player &&
+                arrWins[i + 1] === player &&
+                arrWins[i + 2] === player &&
+                arrWins[i + 3] === player &&
+                arrWins[i + 4] === player ) {
+                    // console.log('5:',arrWins );
+                    kef++
+                }
+            if (
+                arrWins[i + 0] === player &&
+                arrWins[i + 1] === player &&
+                arrWins[i + 2] === player &&
+                arrWins[i + 3] === player &&
+                arrWins[i + 4] === player &&
+                arrWins[i + 5] === player
+            ) {
+                kef++
+                alert(`${player} vins`)
+                break
+            }
+        }
+
+        return kef
+
     }
-    console.log('kef:', kef);
-    return kef
+   
+    
+  
+    // console.log('kef:', kef);
+    
 }

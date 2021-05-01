@@ -1,6 +1,6 @@
 import {useGameField} from '../../context/GameFieldContext'
 import {playersGameAction} from './game'
-import {singleGameAction} from './gameBot'
+import {singleGameAction} from './gameBot1'
 
 export const GameField = () => {
     const {flag, field, setField, count, player_1, player_2, single } = useGameField()
@@ -34,7 +34,7 @@ export const GameField = () => {
                     {field.map(line => line.map(cell => {
                         return (
                             <div className="game_field__cell"
-                            style={cell.weightPlayer == 0 || cell.weightBot == 0 ? {color: 'black'} : {color: 'red', fontWeight: 'bold', fontSize: '2.2rem'}}
+                            style={cell.weightPlayer == 0 && cell.weightBot == 0 ? {color: 'black'} : {color: 'red', fontWeight: 'bold', fontSize: '1.2rem'}}
                             onClick={() => {
                                 if (cell.player === player_1 || cell.player === player_2) {
                                     return null
@@ -49,7 +49,7 @@ export const GameField = () => {
                                
                             }}
                             key={cell.index}
-                            >{cell.player}  </div>
+                            >{cell.player} </div>
                         )
                     }))}
                 </div>
